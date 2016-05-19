@@ -1,10 +1,10 @@
 # webservices-import-data
 
-The sample illustrates how to import data from an external system using the Web services of Sitefinity.
+The sample illustrates how to import data from an external system using the Web services of Sitefinity CMS.
 
 ### Requirements
 
-* Sitefinity license
+* Sitefinity CMS license
 * .NET Framework 4
 * Visual Studio 2012
 * Microsoft SQL Server 2008R2 or later versions
