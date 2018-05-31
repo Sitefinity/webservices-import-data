@@ -599,12 +599,6 @@
     <Reference Include="Telerik.Sitefinity.MarketoConnector, Version=11.0.6700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <HintPath>packages\Telerik.Sitefinity.MarketoConnector.11.0.6700\lib\net471\Telerik.Sitefinity.MarketoConnector.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Migration, Version=9.1.6110.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.Migration.9.1.6110.0\lib\net40\Telerik.Sitefinity.Migration.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Sitefinity.MigrationContracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>packages\Telerik.Sitefinity.Migration.9.1.6110.0\lib\net40\Telerik.Sitefinity.MigrationContracts.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Sitefinity.MobileFormats, Version=11.0.6700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <HintPath>packages\Progress.Sitefinity.MobileFormats.11.0.6700\lib\net471\Telerik.Sitefinity.MobileFormats.dll</HintPath>
     </Reference>
@@ -642,8 +636,8 @@
     <Reference Include="Telerik.Sitefinity.SalesForceConnector, Version=11.0.6700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <HintPath>packages\Telerik.Sitefinity.SalesForceConnector.11.0.6700\lib\net471\Telerik.Sitefinity.SalesForceConnector.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Sitefinity.Samples.Common">
-      <HintPath>packages\Telerik.Sitefinity.Samples.Common.8.2.5900.0\lib\net40\Telerik.Sitefinity.Samples.Common.dll</HintPath>
+    <Reference Include="Telerik.Sitefinity.Samples.Common, Version=11.0.6700.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Telerik.Sitefinity.Samples.Common.11.0.6700.0\lib\net45\Telerik.Sitefinity.Samples.Common.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Sitefinity.Search, Version=11.0.6700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
       <HintPath>packages\Telerik.Sitefinity.ServicesImpl.11.0.6700\lib\net471\Telerik.Sitefinity.Search.dll</HintPath>
@@ -1224,6 +1218,8 @@
     <Error Condition="!Exists('packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('packages\Telerik.Sitefinity.Feather.11.0.6700\build\Telerik.Sitefinity.Feather.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Telerik.Sitefinity.Feather.11.0.6700\build\Telerik.Sitefinity.Feather.targets'))" />
+    <Error Condition="!Exists('packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets'))" />
   </Target>
   <Import Project="packages\Telerik.Sitefinity.Feather.11.0.6700\build\Telerik.Sitefinity.Feather.targets" Condition="Exists('packages\Telerik.Sitefinity.Feather.11.0.6700\build\Telerik.Sitefinity.Feather.targets')" />
+  <Import Project="packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
 </Project>
