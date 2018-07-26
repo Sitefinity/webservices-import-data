@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using IdentityModel.Client;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -16,7 +19,7 @@ namespace ImportDataFromExternalSystem
             var news = new ExternalNewsProvider().GetNews();
 
             // Get an authentication token. The user must have rights to create news items - Editor for example.
-            string token = this.GetAuthenticationToken("admin", "admin@2", baseUrl);
+            string token = this.GetAuthenticationToken("admin@test.com", "password", baseUrl);
 
             foreach (var entry in news)
             {
@@ -30,15 +33,12 @@ namespace ImportDataFromExternalSystem
                 });
 
                 // Create the web request
-                var webRequest = WebRequest.CreateHttp(baseUrl + "newsitems");
+                var webRequest = WebRequest.CreateHttp($"{baseUrl}/api/default/newsitems");
                 webRequest.Method = "POST";
                 webRequest.ContentType = "application/json";
 
                 // Set the authorization header to the acquired token. Authorization is needed for every request that requires restricted data.
                 webRequest.Headers.Add(HttpRequestHeader.Authorization, token);
-
-                // This header is important - it indicates to Sitefinty that this is a service call.
-                webRequest.Headers.Add("X-SF-Service-Request", bool.TrueString);
 
                 using (var writer = new StreamWriter(webRequest.GetRequestStream()))
                 {
@@ -52,6 +52,7 @@ namespace ImportDataFromExternalSystem
 
         /// <summary>
         /// Acquires an authentication token from the server.
+        /// Code inspired by https://docs.sitefinity.com/request-access-token-for-calling-web-services
         /// </summary>
         /// <param name="username">The username of the user.</param>
         /// <param name="password">The password of the user.</param>
@@ -59,35 +60,21 @@ namespace ImportDataFromExternalSystem
         /// <returns></returns>
         internal string GetAuthenticationToken(string username, string password, string baseUrl)
         {
-            var jObj = JObject.FromObject(new
-            {
-                username = username,
-                password = password
-            });
+            var tokenClient = new TokenClient($"{baseUrl}/Sitefinity/Authenticate/OpenID/connect/token", "testApp", "secret", AuthenticationStyle.PostValues);
 
-            // The endpoint for authentication is located at /api/default/login
-            WebRequest request = WebRequest.CreateHttp(baseUrl + "login");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            using (var writer = new StreamWriter(request.GetRequestStream()))
+            var parameters = new Dictionary<string, string>()
             {
-                writer.Write(jObj.ToString());
+                { "membershipProvider", "Default" }
+            };
+
+            var tokenResponse = tokenClient.RequestResourceOwnerPasswordAsync(username, password, "openid offline_access", parameters).Result;
+
+            if (tokenResponse.IsError)
+            {
+                throw new ApplicationException("Couldn't get access token. Error: " + tokenResponse.Error);
             }
 
-            // Make the request and get the auth token
-            var response = request.GetResponse() as HttpWebResponse;
-            JToken token;
-            using (response)
-            {
-                using (var reader = new StreamReader(response.GetResponseStream()))
-                {
-                    var contents = reader.ReadToEnd();
-                    token = JToken.Parse(contents);
-                }
-            }
-
-            return token["value"].ToString();
+            return $"Bearer {tokenResponse.AccessToken}";
         }
     }
 }
