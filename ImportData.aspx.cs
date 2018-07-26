@@ -12,7 +12,7 @@ namespace SitefinityWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var requestBaseUrl = this.Request.Url.GetComponents(UriComponents.Scheme | UriComponents.HostAndPort, UriFormat.Unescaped) + "/api/default/";
+            var requestBaseUrl = this.Request.Url.GetComponents(UriComponents.Scheme | UriComponents.HostAndPort, UriFormat.Unescaped);
             new DataImporter().Import(requestBaseUrl);
         }
     }
